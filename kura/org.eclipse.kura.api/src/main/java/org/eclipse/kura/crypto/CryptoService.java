@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2016 Eurotech and/or its affiliates
+ * Copyright (c) 2011, 2019 Eurotech and/or its affiliates
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -25,7 +25,7 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * The CryptoService is used to provide AES encrypt and decrypt functionality, Base64 encoding and
- * decoding, and SHA1 hash generation.
+ * decoding, and hash generation.
  *
  * @noimplement This interface is not intended to be implemented by clients.
  */
@@ -63,6 +63,7 @@ public interface CryptoService {
      * @throws InvalidKeyException
      * @throws IllegalBlockSizeException
      * @throws BadPaddingException
+     * @deprecated Use {@link #encryptAes(char[]) instead
      */
     @Deprecated
     public String encryptAes(String value) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException,
@@ -80,6 +81,7 @@ public interface CryptoService {
      * @throws IOException
      * @throws IllegalBlockSizeException
      * @throws BadPaddingException
+     * @deprecated Use {@link #decryptAes(char[])} instead
      */
     @Deprecated
     public String decryptAes(String encryptedValue) throws NoSuchAlgorithmException, NoSuchPaddingException,
@@ -89,12 +91,42 @@ public interface CryptoService {
      * Returns a SHA1 hashed value of the provided string s.
      *
      * @param s
-     *            A string on which to run the SHA1 hasing algorithm.
+     *            A string on which to run the SHA1 hashing algorithm.
      * @return String that has been hashed.
      * @throws NoSuchAlgorithmException
      * @throws UnsupportedEncodingException
      */
-    public String sha1Hash(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException;
+    default String sha1Hash(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        return hash(s, "SHA-1");
+    }
+
+    /**
+     * Returns a SHA-256 hashed value of the provided string s.
+     *
+     * @param s
+     *            A string on which to run the SHA-256 hashing algorithm.
+     * @return String that has been hashed.
+     * @throws NoSuchAlgorithmException
+     * @throws UnsupportedEncodingException
+     * @since 2.2
+     */
+    default String sha256Hash(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        return hash(s, "SHA-256");
+    }
+
+    /**
+     * Returns an hashed value of the provided string s.
+     *
+     * @param s
+     *            A string on which to run the hashing algorithm.
+     * @param algorithm
+     *            A String representing the hashing algorithm to be applied
+     * @return String that has been hashed.
+     * @throws NoSuchAlgorithmException
+     * @throws UnsupportedEncodingException
+     * @since 2.2
+     */
+    public String hash(String s, String algorithm) throws NoSuchAlgorithmException, UnsupportedEncodingException;
 
     /**
      * Returns an encoded string based on the provided stringValue.
@@ -149,6 +181,7 @@ public interface CryptoService {
      * @param password
      *            A String that represents the password of the specified keystore.
      * @throws IOException
+     * @deprecated Use {@link #setKeyStorePassword(String, char[])} instead
      */
     @Deprecated
     public void setKeyStorePassword(String keyStorePath, String password) throws IOException;
