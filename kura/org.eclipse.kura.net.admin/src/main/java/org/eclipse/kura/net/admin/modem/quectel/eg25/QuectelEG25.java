@@ -318,7 +318,7 @@ public class QuectelEG25 extends HspaModem implements HspaCellularModem {
     private void turnOff() throws KuraException {
         UsbModemDriver modemDriver = getModemDriver();
         if (modemDriver != null) {
-            modemDriver.disable();
+            modemDriver.disable((UsbModemDevice) getModemDevice());
         } else {
             throw new KuraException(KuraErrorCode.UNAVAILABLE_DEVICE);
         }
@@ -327,7 +327,7 @@ public class QuectelEG25 extends HspaModem implements HspaCellularModem {
     private void turnOn() throws KuraException {
         UsbModemDriver modemDriver = getModemDriver();
         if (modemDriver != null) {
-            modemDriver.enable();
+            modemDriver.enable((UsbModemDevice) getModemDevice());
         } else {
             throw new KuraException(KuraErrorCode.UNAVAILABLE_DEVICE);
         }
