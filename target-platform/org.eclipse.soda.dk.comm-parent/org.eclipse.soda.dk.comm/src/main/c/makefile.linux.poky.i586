@@ -10,7 +10,7 @@
 #########################################################################
 MAKEFILE = makefile.linux
 ############################################################################################################
-#       Configure your OS, CPUTYPE and COMPILER 
+#       Configure your OS, CPUTYPE and COMPILER
 ############################################################################################################
 OS  = Linux
 ##OS=Qnx
@@ -22,7 +22,7 @@ CPUTYPE = i386
 ##CPUTYPE = mips
 ##CPUTYPE = sh4
 ##CPUTYPE = ibm44gp
-LIBTYPE = so                   
+LIBTYPE = so
 ##LIBTYPE = a
 DATATYPE = le
 ##DATATYPE = be
@@ -49,7 +49,7 @@ BUILDFILES3 = SerialDataEventThread.o SerialStatusEventThread.o SysVStyleSemapho
 BUILDFILES4 = NSParallelPort.o ParallelErrorEventThread.o cygSerialDataEventThread.o cygSerialStatusEventThread.o
 BUILDFILES5 = cygParallelPort.o cygParallelErrorEventThread.o cygCommPortIdentifier.o
 C_OBJECTS   = $(BUILDFILES1) $(BUILDFILES2) $(BUILDFILES3) $(BUILDFILES4) $(BUILDFILES5)
-# For Linux ARM BE - Coyote 
+# For Linux ARM BE - Coyote
 ifeq "$(CPUTYPE)_$(COMPILER)""xscale_coyote"
 TOOL_DIR  = /opt/montavista_xscale_be/montavista/pro/devkit/arm/xscale_be/bin
 CROSSCOMP = xscale_be-
@@ -65,7 +65,7 @@ ifeq "$(CPUTYPE)_$(COMPILER)""i386_"
 #TOOL_DIR  = /usr/bin
 #CROSSCOMP =
 #CC        = $(TOOL_DIR)/$(CROSSCOMP)gcc
-CFLAGS    += -shared -D__linux__ -I$(JAVA_HOME)/include -I../include -I. 
+CFLAGS    += -shared -D__linux__ -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux -I../include -I.
 #AS        = $(TOOL_DIR)/$(CROSSCOMP)gcc
 ASFLAGS   = -c $(VMASMDEBUG) -shared
 LINKER    = $(CXX)
@@ -81,7 +81,7 @@ AS        = $(TOOL_DIR)/$(CROSSCOMP)gcc
 ASFLAGS   = -c $(VMASMDEBUG) -shared
 LINKER    = $(TOOL_DIR)/$(CROSSCOMP)gcc
 endif
-# Kenati Linux gcc for Power PC 
+# Kenati Linux gcc for Power PC
 ifeq "$(CPUTYPE)_$(COMPILER)""powerpc_kenati"
 CROSSCOMP = powerpc-uclibc-
 TOOL_DIR  = /opt/kenati/bin
@@ -91,15 +91,15 @@ ASFLAGS   = -c $(VMASMDEBUG)
 ifeq "$(LIBTYPE)""a"
 CFLAGS   = -D__linux__ -DLINUXPPC -DJ9VM_STATIC_LINKAGE -mcpu=$(CPUTYPE) -I../include -I. -I/phx4f/team/ravi/j9lnxppc/include -fno-exceptions
 LINKER   = $(TOOL_DIR)/$(CROSSCOMP)ar
-LNKFLAGS = rcv 
+LNKFLAGS = rcv
 else
 #CFLAGS   = -shared -D__linux__ -mcpu=$(CPUTYPE) -I../include  -I. -I/phx4f/team/ravi/j9lnxppc/include
-CFLAGS   = -shared -fPIC -D__linux__ -mcpu=$(CPUTYPE) -I../include -I. -I/phx4f/team/ravi/j9lnxppc/include 
+CFLAGS   = -shared -fPIC -D__linux__ -mcpu=$(CPUTYPE) -I../include -I. -I/phx4f/team/ravi/j9lnxppc/include
 LINKER   = $(TOOL_DIR)/$(CROSSCOMP)gcc
 LNKFLAGS = -shared -o
 endif
 endif
-# Montavista PEE 3.1 for the ppc82xx Sandpoint Board 
+# Montavista PEE 3.1 for the ppc82xx Sandpoint Board
 ifeq "$(CPUTYPE)_$(COMPILER)""ppc82xx_mvlpee31"
 TOOL_DIR  = /opt/montavista_x86_ppc82xx/montavista/pro/devkit/ppc/82xx/bin
 CROSSCOMP = ppc_82xx-
@@ -110,7 +110,7 @@ ASFLAGS   = -c $(VMASMDEBUG) -shared
 LINKER    = $(TOOL_DIR)/$(CROSSCOMP)gcc
 LNKFLAGS  = -shared -o
 endif
-# Montavista PEE 3.1 for the MIPS LE/BE Malta Board 
+# Montavista PEE 3.1 for the MIPS LE/BE Malta Board
 ifeq "$(CPUTYPE)_$(COMPILER)""mips_mvlpee31"
 CROSSCOMP = mips_fp_$(DATATYPE)-
 TOOL_DIR  = /opt/montavista/pro/devkit/mips/fp_$(DATATYPE)/bin
@@ -132,7 +132,7 @@ ASFLAGS   = -c $(VMASMDEBUG) -shared
 LINKER    = $(TOOL_DIR)/$(CROSSCOMP)gcc
 LNKFLAGS  = -shared -o
 endif
-# Montavista PEE 3.1 for the IBM 440GP Walnut Board 
+# Montavista PEE 3.1 for the IBM 440GP Walnut Board
 ifeq "$(CPUTYPE)_$(COMPILER)""ppc440gp_mvlpee31"
 CROSSCOMP = ppc_440-
 TOOL_DIR  = /opt/montavista_ppc_440gp/montavista/pro/devkit/ppc/440/bin
@@ -143,7 +143,7 @@ ASFLAGS   = -c $(VMASMDEBUG) -shared
 LINKER    = $(TOOL_DIR)/$(CROSSCOMP)gcc
 LNKFLAGS  = -shared -o
 endif
-# Montavista CEE 3.1 for the xscale Mainstone Board 
+# Montavista CEE 3.1 for the xscale Mainstone Board
 ifeq "$(CPUTYPE)_$(COMPILER)""xscale_mvlcee31"
 CROSSCOMP = iwmmxt_le-
 TOOL_DIR  = /opt/montavista/cee/devkit/arm/iwmmxt_le/bin
@@ -154,10 +154,10 @@ ASFLAGS   = -c $(VMASMDEBUG) -shared
 LINKER    = $(TOOL_DIR)/$(CROSSCOMP)ar
 LNKFLAGS  = rcv
 endif
-# Montavista Linux gcc for the xscale 
+# Montavista Linux gcc for the xscale
 ifeq "$(CPUTYPE)_$(COMPILER)""xscale_mvlarm"
 CROSSCOMP = arm_sa_le-
-TOOL_DIR  = /opt/montavista/pro/devkit/arm/sa_le/bin 
+TOOL_DIR  = /opt/montavista/pro/devkit/arm/sa_le/bin
 CC        = $(TOOL_DIR)/$(CROSSCOMP)gcc
 CFLAGS    = -shared -D__linux__ -mcpu=$(CPUTYPE) -I../include -I/phx5f/projects/TCK/cert22/runtimes/0706/mvl/31/xscale/bin/include -I. -fPIC
 AS        = $(TOOL_DIR)/$(CROSSCOMP)gcc
@@ -175,10 +175,10 @@ $(DLLNAME): \
 	mkdir -p `dirname $(DLLNAME)`
 	$(LINKER) $(LNKFLAGS) $(DLLNAME) \
         $(C_OBJECTS)
-messages:         
+messages:
 	@echo "================================================";
 	@echo " === It is for $(CPUTYPE)($(DATATYPE)) $(COMPILER) $(BOARDTYPE) ===";
 	@echo "================================================";
-        
+
 clean:
 	rm $(DLLNAME)
