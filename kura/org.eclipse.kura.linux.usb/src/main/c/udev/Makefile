@@ -16,7 +16,8 @@ OBJECTS = \
 	LinuxUdev.o
 HEADER = org_eclipse_kura_linux_usb_LinuxUdevNative.h
 
-CC = gcc
+#TODO: cross-compile
+CC = gcc -m32
 CCLD = $(CC)
 
 #INCLUDES = -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux $(CINCLUDES)
