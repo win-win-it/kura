@@ -74,6 +74,7 @@
         <module>org.eclipse.kura.linux.usb</module>
         <module>org.eclipse.kura.linux.usb.armv6hf</module>
         <module>org.eclipse.kura.linux.usb.x86_64</module>
+        <module>org.eclipse.kura.linux.usb.x86</module>
         <module>org.eclipse.kura.linux.usb.aarch64</module>
         <module>org.eclipse.kura.linux.watchdog</module>
         <module>org.eclipse.kura.localization</module>
