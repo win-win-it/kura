@@ -1,13 +1,14 @@
 #!/bin/sh
 #
-# Copyright (c) 2011, 2020 Eurotech and/or its affiliates
+#  Copyright (c) 2011, 2020 Eurotech and/or its affiliates and others
 #
-#  All rights reserved. This program and the accompanying materials
-#  are made available under the terms of the Eclipse Public License v1.0
-#  which accompanies this distribution, and is available at
-#  http://www.eclipse.org/legal/epl-v10.html
+#  This program and the accompanying materials are made
+#  available under the terms of the Eclipse Public License 2.0
+#  which is available at https://www.eclipse.org/legal/epl-2.0/
 #
-# Contributors:
+#  SPDX-License-Identifier: EPL-2.0
+#
+#  Contributors:
 #   Eurotech
 #
 
@@ -36,6 +37,11 @@ cp ${INSTALL_DIR}/kura/user/snapshots/snapshot_0.xml ${INSTALL_DIR}/kura/.data/s
 if [ ! -d /etc/sysconfig ]; then
     mkdir /etc/sysconfig
 fi
+
+#set up users and grant permissions to them
+cp ${INSTALL_DIR}/kura/install/manage_kura_users.sh ${INSTALL_DIR}/kura/.data/manage_kura_users.sh
+chmod 700 ${INSTALL_DIR}/kura/.data/manage_kura_users.sh
+${INSTALL_DIR}/kura/.data/manage_kura_users.sh -i 
 
 systemctl stop apparmor
 systemctl disable apparmor
